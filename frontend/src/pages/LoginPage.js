@@ -135,11 +135,14 @@ const LoginPage = () => {
             <div className="mt-6">
               <button
                 onClick={() => {
+                  console.log("Demo button clicked");
                   setEmail('demo@example.com');
                   setIsLoading(true);
                   setTimeout(() => {
+                    console.log("Calling login with current user");
                     login(currentUser);
                     setIsLoading(false);
+                    console.log("Navigating to /");
                     navigate('/', { replace: true });
                   }, 1000);
                 }}
