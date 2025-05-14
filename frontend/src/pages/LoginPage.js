@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { currentUser } from '../mock/mailData';
 
 const LoginPage = ({ onLogin }) => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -27,13 +25,7 @@ const LoginPage = ({ onLogin }) => {
     
     // Mock login - simulate API call
     setTimeout(() => {
-      // Create a user profile with the email and default data
-      const user = {
-        ...currentUser,
-        email: email
-      };
-      
-      onLogin(user);
+      onLogin();
       setIsLoading(false);
     }, 1500);
   };
@@ -134,7 +126,7 @@ const LoginPage = ({ onLogin }) => {
                 onClick={() => {
                   setIsLoading(true);
                   setTimeout(() => {
-                    onLogin(currentUser);
+                    onLogin();
                     setIsLoading(false);
                   }, 1000);
                 }}
