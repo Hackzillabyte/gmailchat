@@ -37,7 +37,7 @@ const LoginPage = () => {
       
       login(user);
       setIsLoading(false);
-      navigate('/');
+      navigate('/', { replace: true });
     }, 1500);
   };
 
