@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
 
   // Login function (mock)
   const login = (userData) => {
+    console.log("Logging in user:", userData);
     localStorage.setItem('gmailChatUser', JSON.stringify(userData));
     setUser(userData);
     setIsAuthenticated(true);
