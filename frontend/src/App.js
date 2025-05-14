@@ -17,8 +17,8 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <div className="App">
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route 
@@ -30,8 +30,8 @@ function App() {
               } 
             />
           </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }
