@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useAuth } from '../context/AuthContext';
 import { currentUser } from '../mock/mailData';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -35,9 +33,8 @@ const LoginPage = () => {
         email: email
       };
       
-      login(user);
+      onLogin(user);
       setIsLoading(false);
-      navigate('/', { replace: true });
     }, 1500);
   };
 
@@ -135,15 +132,10 @@ const LoginPage = () => {
             <div className="mt-6">
               <button
                 onClick={() => {
-                  console.log("Demo button clicked");
-                  setEmail('demo@example.com');
                   setIsLoading(true);
                   setTimeout(() => {
-                    console.log("Calling login with current user");
-                    login(currentUser);
+                    onLogin(currentUser);
                     setIsLoading(false);
-                    console.log("Navigating to /");
-                    navigate('/', { replace: true });
                   }, 1000);
                 }}
                 className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

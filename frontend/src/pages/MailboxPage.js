@@ -1,40 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import Conversation from '../components/Conversation';
-import { getConversations } from '../mock/mailData';
 
-const MailboxPage = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const [conversations, setConversations] = useState([]);
-  const [activeConversation, setActiveConversation] = useState(null);
+const MailboxPage = ({ conversations, activeConversation, onConversationClick, onLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    // Load conversations from mock data
-    const loadedConversations = getConversations();
-    setConversations(loadedConversations);
-    
-    // Set the first conversation as active by default
-    if (loadedConversations.length > 0) {
-      setActiveConversation(loadedConversations[0]);
-    }
-  }, []);
-
-  const handleConversationClick = (conversation) => {
-    setActiveConversation(conversation);
+  const handleConversationSelect = (conversation) => {
+    onConversationClick(conversation);
     // Close mobile menu if open
     if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
     }
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
   };
 
   return (
@@ -84,11 +61,8 @@ const MailboxPage = () => {
             <div className="flex items-center">
               <div className="ml-3 relative">
                 <div className="flex items-center">
-                  <span className="hidden md:block text-sm font-medium text-gray-700 mr-4">
-                    {user?.email}
-                  </span>
                   <button
-                    onClick={handleLogout}
+                    onClick={onLogout}
                     className="ml-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
                     Logout
@@ -118,7 +92,7 @@ const MailboxPage = () => {
           <Sidebar 
             conversations={conversations}
             activeConversation={activeConversation}
-            onConversationClick={handleConversationClick}
+            onConversationClick={handleConversationSelect}
           />
         </motion.aside>
 
