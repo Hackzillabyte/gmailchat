@@ -18,6 +18,12 @@ function App() {
     if (loadedConversations.length > 0) {
       setActiveConversation(loadedConversations[0]);
     }
+
+    // Check URL for demo parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('demo') === 'true') {
+      setShowMailbox(true);
+    }
   }, []);
 
   const handleConversationClick = (conversation) => {
@@ -27,6 +33,8 @@ function App() {
   // If user wants to go back to login page
   const handleLogout = () => {
     setShowMailbox(false);
+    // Remove demo parameter from URL
+    window.history.pushState({}, "", window.location.pathname);
   };
 
   if (showMailbox) {
@@ -42,9 +50,15 @@ function App() {
 
   return (
     <div className="App">
-      <LoginPage onLogin={() => setShowMailbox(true)} />
+      <LoginPage onLogin={() => {
+        setShowMailbox(true);
+        // Add demo parameter to URL
+        window.history.pushState({}, "", "?demo=true");
+      }} />
     </div>
   );
 }
+
+export default App;
 
 export default App;
